@@ -1,3 +1,5 @@
+const testCases = require('./input')
+
 const fibonacci = (num, memo) => {
   memo = memo || {}
   // we are using memoization so we don't have to compute the same fibonacci numbers againçç
@@ -7,12 +9,19 @@ const fibonacci = (num, memo) => {
   return memo[num] = fibonacci(num - 1, memo) + fibonacci(num - 2, memo)
 }
 
-const N = 20
-const X = [1, 2]
+// running each test case:
+testCases.forEach(testCase => {
+  const X = testCase.X
+  const N = testCase.N
 
-const numberOfPossibilities = X.reduce((totalNumberOfPossibilities, numberOfSteps) => {
-  return totalNumberOfPossibilities + fibonacci(N - numberOfSteps)
-}, 0)
-
-console.log(`This is the Total number of ways of climbing the stairs: ${numberOfPossibilities}`)
-
+  // this is the actual code for solving the problem
+  const numberOfPossibilities = X.reduce((totalNumberOfPossibilities, numberOfSteps) => {
+    if (numberOfSteps <= N) { // ignoring number greater than N
+      return totalNumberOfPossibilities + fibonacci(N - numberOfSteps)
+    } else return totalNumberOfPossibilities
+  }, 0)
+  
+  console.log(`Number of possibilities for input X = ${X} and N = ${N}: `)
+  console.log(`Total: ${numberOfPossibilities}`)
+  console.log(``)
+})
